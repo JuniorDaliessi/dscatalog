@@ -56,7 +56,7 @@
 
 - CategoryResource
   
-- ```java
+-- ```java
   package com.devsuperior.backend.resources;
   
   import java.util.ArrayList;
@@ -85,7 +85,7 @@
   }
   ```
   
-- >
+-- >
   >
   >Descrição:
   >
