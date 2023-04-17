@@ -56,17 +56,56 @@
 
 - CategoryResource
   
--- """ +-----------------------------------+
-|          CategoryResources        |
-+-----------------------------------+
-|                                   |
-|                                   |
-+-----------------------------------+
-| + findAll(): ResponseEntity<List< |
-|              Category>>           |
-+-----------------------------------+
-"""
-
+- ```java
+  package com.devsuperior.backend.resources;
+  
+  import java.util.ArrayList;
+  import java.util.List;
+  
+  import org.springframework.http.ResponseEntity;
+  import org.springframework.web.bind.annotation.RequestMapping;
+  import org.springframework.web.bind.annotation.RestController;
+  
+  import com.devsuperior.backend.entities.Category;
+  
+  // O resource é o conceito e o controller REST é a implementação
+  
+  @RestController //Anotação para indicar que a classe é um recurso web
+  @RequestMapping (value = "/categories") //Anotação para indicar o caminho do recurso
+  public class CategoryResources {
+  
+      //Metodos
+      @RequestMapping //Anotação para indicar que o método responde a requisição do tipo GET do HTTP
+      public ResponseEntity<List<Category>> findAll() {
+          List <Category> list = new ArrayList <> ();
+          list.add(new Category(1L, "Books"));
+          list.add(new Category(2L, "Electronics"));
+          return ResponseEntity.ok().body(list);
+      }
+  }
+  ```
+  
+- >
+  >
+  >Descrição:
+  >
+  >Esta classe é responsável por expor um endpoint REST para buscar todas as categorias disponíveis. Ela implementa o conceito de recurso em uma aplicação Spring Boot.
+  >
+  >Atributos:
+  >Nenhum atributo declarado na classe.
+  >
+  >Métodos:
+  >- findAll(): Método que retorna uma lista com todas as categorias cadastradas no sistema. Ele é mapeado para o endpoint "/categories" através da anotação @RequestMapping presente na classe.
+  >  - Tipo de retorno: ResponseEntity<List<Category>>
+  >  - Anotações: @RequestMapping (para indicar que o método responde a requisição do tipo GET do HTTP)
+  >  
+  >
+  >Anotações:
+  >- @RestController: Indica que a classe é um recurso web.
+  >- @RequestMapping: Indica o caminho do recurso.
+  >
+  >Exemplo de uso:
+  >Ao acessar o endpoint "/categories" através de um navegador ou de uma requisição HTTP, será retornado um JSON contendo uma lista com todas as categorias cadastradas no sistema.
 
 
 
