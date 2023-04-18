@@ -2,10 +2,20 @@ package com.devsuperior.backend.entities;
 
 import java.io.Serializable;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity //Anotação para dizer que a classe é uma entidade
+@Table (name = "tb_category") //Anotação para dizer que a classe é uma tabela
 public class Category implements Serializable {
     private static final long serialVersionUID = 1L;
     
     //Atributos
+    @Id //Anotação para dizer que o atributo é uma chave primária
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //Anotação para dizer que o atributo é auto incrementado (gerado automaticamente
     private Long id;
     private String name;
 
