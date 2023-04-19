@@ -8,7 +8,8 @@
 
 - Criar monorepo Git
 
-- Organizar o projeto em camadas
+- Organizar o projeto em camadas Web Service
+- - ![Camadas Web Service](img/web_service.jpg)
 
 - - Controlador REST
 
