@@ -22,7 +22,25 @@
 
   - Serviço
 
+    > A camada de serviço, ou service layer, é uma camada da arquitetura de um web service que contém a lógica de negócios da aplicação. Ela é responsável por receber as solicitações dos controladores (controllers) e coordenar as operações necessárias para atender a essas solicitações.
+    >
+    > Em geral, a camada de serviço é a camada intermediária entre a camada de controle e a camada de acesso a dados (data access layer). Ela pode chamar os métodos de acesso a dados para recuperar informações do banco de dados, manipular essas informações e enviar a resposta de volta para os controladores.
+    >
+    > A camada de serviço também pode executar outras tarefas importantes, como validação de dados de entrada, aplicação de regras de negócios e tratamento de exceções. Ela pode usar outras camadas da aplicação, como a camada de segurança ou a camada de cache, para cumprir suas funções.
+    >
+    > Em resumo, a camada de serviço é uma camada crucial na arquitetura de um web service, pois ela contém a lógica de negócios da aplicação e é responsável por garantir que as solicitações dos controladores sejam atendidas de maneira eficiente e eficaz.
+
   - Acesso a dados (Repository)
+
+    > Com certeza! A camada de acesso a dados, ou data access layer, é responsável por interagir com o banco de dados ou qualquer outra fonte de dados externa usada pelo web service. Essa camada é geralmente implementada usando um padrão de projeto de persistência, como o padrão Repository.
+    >
+    > Os repositórios, ou Repository, são classes que fornecem uma abstração da fonte de dados subjacente e permitem que a camada de serviço (ou outras camadas) interajam com o banco de dados ou outra fonte de dados sem precisar saber detalhes de como as operações de persistência são realizadas.
+    >
+    > Os repositórios geralmente expõem métodos de consulta (como `find` ou `get`) e métodos de modificação (como `save` ou `delete`) que permitem que os serviços leiam e gravem dados na fonte de dados subjacente.
+    >
+    > A camada de acesso a dados pode ser implementada usando vários frameworks ou bibliotecas, como o Spring Data JPA, que fornece uma maneira conveniente de criar repositórios com operações CRUD (Create, Read, Update, Delete) comuns.
+    >
+    > Em resumo, a camada de acesso a dados é uma camada importante na arquitetura de um web service, pois ela permite que o serviço interaja com a fonte de dados subjacente de forma eficiente e eficaz, sem precisar conhecer detalhes de como as operações de persistência são realizadas.
 
 - Criar entidades
 
@@ -52,41 +70,8 @@
 - Associações entre entidades (N-N)
 
 ## Comtrolador REST 
-### Classes
-
 - CategoryResource
   
-- ```java
-  package com.devsuperior.backend.resources;
-  
-  import java.util.ArrayList;
-  import java.util.List;
-  
-  import org.springframework.http.ResponseEntity;
-  import org.springframework.web.bind.annotation.RequestMapping;
-  import org.springframework.web.bind.annotation.RestController;
-  
-  import com.devsuperior.backend.entities.Category;
-  
-  // O resource é o conceito e o controller REST é a implementação
-  
-  @RestController //Anotação para indicar que a classe é um recurso web
-  @RequestMapping (value = "/categories") //Anotação para indicar o caminho do recurso
-  public class CategoryResources {
-  
-      //Metodos
-      @RequestMapping //Anotação para indicar que o método responde a requisição do tipo GET do HTTP
-      public ResponseEntity<List<Category>> findAll() {
-          List <Category> list = new ArrayList <> ();
-          list.add(new Category(1L, "Books"));
-          list.add(new Category(2L, "Electronics"));
-          return ResponseEntity.ok().body(list);
-      }
-  }
-  ```
-  
-- >
-  >
   >Descrição:
   >
   >Esta classe é responsável por expor um endpoint REST para buscar todas as categorias disponíveis. Ela implementa o conceito de recurso em uma aplicação Spring Boot.
@@ -96,16 +81,69 @@
   >
   >Métodos:
   >- findAll(): Método que retorna uma lista com todas as categorias cadastradas no sistema. Ele é mapeado para o endpoint "/categories" através da anotação @RequestMapping presente na classe.
-  >  - Tipo de retorno: ResponseEntity<List<Category>>
-  >  - Anotações: @RequestMapping (para indicar que o método responde a requisição do tipo GET do HTTP)
-  >  
-  >
-  >Anotações:
+  > - Tipo de retorno: ResponseEntity<List<Category>>
+  > - Anotações: @RequestMapping (para indicar que o método responde a requisição do tipo GET do HTTP)
+  > 
+  > 
+  >  Anotações:
   >- @RestController: Indica que a classe é um recurso web.
   >- @RequestMapping: Indica o caminho do recurso.
   >
   >Exemplo de uso:
   >Ao acessar o endpoint "/categories" através de um navegador ou de uma requisição HTTP, será retornado um JSON contendo uma lista com todas as categorias cadastradas no sistema.
 
+## Camada de serviço
 
+* CategoryService
+
+  > Classe: CategoryService
+  >
+  > Descrição: Esta classe é responsável por fornecer serviços para as operações relacionadas a categorias. Ela utiliza a camada de acesso a dados (Repository) para recuperar as informações do banco de dados.
+  >
+  > Atributos:
+  >
+  > - repository: Atributo que representa a instância da classe CategoryRepository, responsável por prover acesso ao banco de dados.
+  >
+  > Métodos:
+  >
+  > - findAll(): Método que retorna uma lista com todas as categorias cadastradas no sistema. Ele delega a operação para a instância de CategoryRepository presente na classe.
+  >   - Tipo de retorno: List<Category>
+  >
+  > Anotações:
+  >
+  > - @Service: Indica que a classe é um componente do Spring que será injetado automaticamente.
+  > - @Autowired: Indica que a dependência da classe CategoryRepository será injetada automaticamente pelo Spring.
+  >
+  > Exemplo de uso: Ao utilizar a classe CategoryService, é possível obter uma lista com todas as categorias cadastradas no sistema através do método findAll(). Para isso, basta injetar a instância de CategoryService em outras classes e chamar o método desejado. Por exemplo:
+  >
+  > ```java
+  > @Service
+  > public class ProductService {
+  > 
+  > @Autowired
+  > private CategoryService categoryService;
+  > 
+  > public List<Product> findByCategoryId(Long categoryId) {
+  >     List<Category> categories = categoryService.findAll();
+  >     // Busca produtos do banco de dados a partir do id da categoria
+  >     // ...
+  >     }
+  > }
+  > ```
+
+> Neste exemplo, a classe ProductService utiliza a instância de  CategoryService para obter a lista de todas as categorias cadastradas no sistema.
+
+## Camada de acesso a dados (Repository)
+
+* CategoryRepository
+
+  > A classe `CategoryRepository` é uma interface que estende a interface `JpaRepository` do Spring Data JPA, que oferece um conjunto de métodos padrão para realizar operações básicas de acesso a dados, como criar, ler, atualizar e excluir (CRUD) entidades no banco de dados.
+  >
+  > A anotação `@Repository` indica que a classe é um componente do Spring e será gerenciada pelo container do Spring, permitindo que ela seja injetada automaticamente em outras classes.
+  >
+  > Além disso, a interface `CategoryRepository` define um método `findAll()` que retorna uma lista com todas as categorias cadastradas no banco de dados.
+  >
+  > A interface `JpaRepository` espera dois tipos genéricos, sendo o primeiro o tipo da entidade gerenciada pelo repositório (neste caso, a classe `Category`) e o segundo o tipo do identificador da entidade (neste caso, `Long`). Essa informação é usada pelo Spring Data JPA para gerar automaticamente consultas SQL apropriadas para o banco de dados.
+
+  
 
