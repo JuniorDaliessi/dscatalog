@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.devsuperior.backend.entities.Category;
+import com.devsuperior.backend.dto.CategoryDTO;
 import com.devsuperior.backend.services.CategoryService;
 
 //Controlodor REST
@@ -23,8 +23,8 @@ public class CategoryResources {
     private CategoryService service;
 
     @GetMapping //Anotação para indicar que o método responde a requisição do tipo GET do HTTP
-    public ResponseEntity<List<Category>> findAll() {
-        List<Category> list = service.findAll();
+    public ResponseEntity<List<CategoryDTO>> findAll() {
+        List<CategoryDTO> list = service.findAll();
         return ResponseEntity.ok().body(list);
     }
 }
