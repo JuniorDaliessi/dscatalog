@@ -19,6 +19,8 @@
     > O Controller REST é responsável por receber as requisições HTTP, extrair as informações necessárias dos cabeçalhos, corpo da mensagem ou parâmetros da URL, processar essas informações e encaminhar a requisição para a camada de negócio (business logic) da aplicação, que é responsável por manipular os dados e retornar uma resposta adequada.
     >
     > Em resumo, enquanto o recurso é um conceito abstrato que representa uma entidade que pode ser acessada ou manipulada por meio de um URI, o Controller REST é uma implementação concreta que é responsável por gerenciar as requisições HTTP para esses recursos, manipular os dados e retornar as respostas adequadas.
+    >
+    > 
 
   - Serviço
 
@@ -29,6 +31,8 @@
     > A camada de serviço também pode executar outras tarefas importantes, como validação de dados de entrada, aplicação de regras de negócios e tratamento de exceções. Ela pode usar outras camadas da aplicação, como a camada de segurança ou a camada de cache, para cumprir suas funções.
     >
     > Em resumo, a camada de serviço é uma camada crucial na arquitetura de um web service, pois ela contém a lógica de negócios da aplicação e é responsável por garantir que as solicitações dos controladores sejam atendidas de maneira eficiente e eficaz.
+    >
+    > 
 
   - Acesso a dados (Repository)
 
@@ -41,12 +45,22 @@
     > A camada de acesso a dados pode ser implementada usando vários frameworks ou bibliotecas, como o Spring Data JPA, que fornece uma maneira conveniente de criar repositórios com operações CRUD (Create, Read, Update, Delete) comuns.
     >
     > Em resumo, a camada de acesso a dados é uma camada importante na arquitetura de um web service, pois ela permite que o serviço interaja com a fonte de dados subjacente de forma eficiente e eficaz, sem precisar conhecer detalhes de como as operações de persistência são realizadas.
+    >
+    > 
 
 - Criar entidades
 
 - Configurar perfil de teste do projeto
 
 - Seeding da base de dados
+
+  > Seeding de banco de dados é um processo utilizado para preencher o banco de dados com dados iniciais, geralmente para fins de desenvolvimento, testes ou demonstração. Esses dados podem ser utilizados para popular o banco com informações básicas que possam ser usadas para testar o comportamento do sistema em diferentes cenários ou para preencher o banco de dados com dados fictícios ou de exemplo que possam ser usados para demonstrar o funcionamento do sistema para os usuários.
+  >
+  > O processo de seeding geralmente é feito por meio de scripts SQL ou por meio de código em alguma linguagem de programação que insere os dados diretamente no banco de dados.
+  >
+  > No contexto de uma aplicação Spring Boot, é possível utilizar a classe CommandLineRunner para executar o processo de seeding automaticamente ao iniciar a aplicação. Através desse mecanismo, é possível chamar o serviço de uma determinada entidade que se encarregará de popular o banco de dados com os dados iniciais.
+  >
+  > 
 
 - Criar web services REST
 
@@ -56,6 +70,27 @@
   - Resposta da requisição ResponseEntity<T>
 
 - Padrão DTO
+
+  > O Padrão DTO (Data Transfer Object) é um padrão de projeto de software que tem como objetivo principal a transferência de dados entre diferentes componentes de um sistema, como camadas de aplicação, serviços web ou APIs.
+  >
+  > O DTO é uma classe simples que contém campos (propriedades) que representam os dados que devem ser transferidos entre esses componentes. Ele não possui lógica de negócio e geralmente é utilizado para enviar dados de um servidor para um cliente ou vice-versa.
+  >
+  > O uso do padrão DTO pode trazer vários benefícios para um sistema, como a simplificação da comunicação entre diferentes camadas ou componentes, a redução do acoplamento entre esses componentes e a melhoria da performance, já que o DTO permite enviar apenas os dados necessários, sem sobrecarregar a rede ou o processamento.
+  >
+  > Exemplo de uma classe DTO em Java:
+  >
+  > ```java
+  > public class PessoaDTO {
+  >     private Long id;
+  >     private String nome;
+  >     private String email;
+  >     // getters e setters
+  > }
+  > ```
+  >
+  > Nesse exemplo, a classe PessoaDTO representa um objeto de transferência  de dados que contém as propriedades id, nome e email. Essa classe pode  ser utilizada para transferir dados de uma pessoa entre diferentes  componentes de um sistema, sem expor os detalhes internos da entidade  Pessoa.
+  >
+  > 
 
 - CRUD completo
 
@@ -91,6 +126,8 @@
   >
   >Exemplo de uso:
   >Ao acessar o endpoint "/categories" através de um navegador ou de uma requisição HTTP, será retornado um JSON contendo uma lista com todas as categorias cadastradas no sistema.
+  >
+  >
 
 ## Camada de serviço
 
@@ -132,6 +169,8 @@
   > ```
 
 > Neste exemplo, a classe ProductService utiliza a instância de  CategoryService para obter a lista de todas as categorias cadastradas no sistema.
+>
+> 
 
 ## Camada de acesso a dados (Repository)
 
