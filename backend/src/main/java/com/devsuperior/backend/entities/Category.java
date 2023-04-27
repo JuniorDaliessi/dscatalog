@@ -45,7 +45,7 @@ public class Category implements Serializable {
         this.name = name;
     }
 
-    //HashCode e Equals
+    //HashCode e Equals para comparar objetos
     @Override
     public int hashCode() {
         final int prime = 31;
