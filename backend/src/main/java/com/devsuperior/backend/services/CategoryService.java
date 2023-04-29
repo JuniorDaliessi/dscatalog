@@ -1,6 +1,7 @@
 package com.devsuperior.backend.services;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,13 @@ public class CategoryService {
             listDto.add(new CategoryDTO(cat));
         }*/ 
         //return listDto;
+    }
+
+    @Transactional(readOnly = true) //Anotação para indicar que o método é transacional e que a operação é somente leitura
+    public CategoryDTO findById(Long id) {
+        Optional <Category> obj = repository.findById(id);
+        Category entity = obj.get();
+        return new CategoryDTO(entity);
     }
     
 }
