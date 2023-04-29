@@ -9,6 +9,9 @@
 - Criar monorepo Git
 
 - Organizar o projeto em camadas Web Service
+
+- * ![Video](https://www.youtube.com/watch?v=b8uLFfzcVQ8&t=104s)
+
 - - ![Camadas Web Service](img/web_service.jpg)
 
 - - Controlador REST
@@ -106,24 +109,43 @@
 - Associações entre entidades (N-N)
 
 ## Comtrolador REST 
-- CategoryResource
-  
-  >Descrição:
+- >- ## Classe CategoryResources
   >
-  >Esta classe é responsável por expor um endpoint REST para buscar todas as categorias disponíveis. Ela implementa o conceito de recurso em uma aplicação Spring Boot.
+  >  A classe `CategoryResources` é um Rest Controller que implementa as rotas REST para manipulação de dados referentes às categorias de um aplicativo. Ela utiliza a biblioteca Spring Framework para gerenciamento de requisições HTTP.
   >
-  >Atributos:
-  >Nenhum atributo declarado na classe.
+  >  ### Atributos
   >
-  >Métodos:
-  >- findAll(): Método que retorna uma lista com todas as categorias cadastradas no sistema. Ele é mapeado para o endpoint "/categories" através da anotação @RequestMapping presente na classe.
-  > - Tipo de retorno: ResponseEntity<List<Category>>
-  > - Anotações: @RequestMapping (para indicar que o método responde a requisição do tipo GET do HTTP)
-  > 
-  > 
-  >  Anotações:
-  >- @RestController: Indica que a classe é um recurso web.
-  >- @RequestMapping: Indica o caminho do recurso.
+  >  A classe possui apenas um atributo:
+  >
+  >  - `service`: é uma instância da classe `CategoryService` injetada automaticamente pelo Spring Framework através da anotação `@Autowired`. Essa classe é responsável por acessar os dados de categoria no banco de dados e realizar operações de CRUD (create, read, update, delete).
+  >
+  >  ### Métodos
+  >
+  >  A classe possui dois métodos públicos:
+  >
+  >  - `findAll()`: esse método responde a uma requisição do tipo GET para a rota `/categories`. Ele utiliza a anotação `@GetMapping` para indicar que responde a esse tipo de requisição. Esse método chama o método `findAll()` da classe `CategoryService` para obter uma lista de objetos `CategoryDTO`. Em seguida, retorna um objeto `ResponseEntity` contendo a lista de objetos `CategoryDTO` no corpo da resposta.
+  >  - `findById(Long id)`: esse método responde a uma requisição do tipo GET para a rota `/categories/{id}`, onde `{id}` é um parâmetro da rota que representa o id da categoria. Ele utiliza a anotação `@GetMapping` para indicar que responde a esse tipo de requisição e recebe o parâmetro `id` com a anotação `@PathVariable`. Esse método chama o método `findById(Long id)` da classe `CategoryService`, passando o parâmetro `id`. Em seguida, retorna um objeto `ResponseEntity` contendo o objeto `CategoryDTO` no corpo da resposta.
+  >
+  >  ### Anotações
+  >
+  >  A classe utiliza duas anotações do Spring Framework:
+  >
+  >  - `@RestController`: essa anotação indica que a classe é um Rest Controller, ou seja, um controlador de rotas REST.
+  >  - `@RequestMapping(value = "/categories")`: essa anotação indica o caminho da rota principal do recurso, que é `/categories`.
+  >
+  >  Além dessas anotações, cada método utiliza a anotação `@GetMapping` para indicar que responde a uma requisição do tipo GET.
+  >
+  >  ### Retorno
+  >
+  >  Os dois métodos da classe retornam objetos `ResponseEntity` com o status HTTP 200 (ok) e o corpo da resposta contendo a lista de objetos `CategoryDTO` ou o objeto `CategoryDTO` correspondente ao id fornecido.
+  >
+  >  ### Dependências
+  >
+  >  A classe `CategoryResources` depende da classe `CategoryService`, que é injetada automaticamente pelo Spring Framework através da anotação `@Autowired`.
+  >
+  >  ## Conclusão
+  >
+  >  A classe `CategoryResources` é uma implementação de um Rest Controller para manipulação de dados de categoria de um aplicativo utilizando a biblioteca Spring Framework. Ela possui métodos para obter a lista de todas as categorias e obter uma categoria específica pelo seu id. A classe depende da classe `CategoryService` para realizar as operações de CRUD no banco de dados.
   >
   >Exemplo de uso:
   >Ao acessar o endpoint "/categories" através de um navegador ou de uma requisição HTTP, será retornado um JSON contendo uma lista com todas as categorias cadastradas no sistema.
@@ -132,25 +154,38 @@
 
 ## Camada de serviço
 
-* CategoryService
-
-  > Classe: CategoryService
+* > - Classe `CategoryService`
   >
-  > Descrição: Esta classe é responsável por fornecer serviços para as operações relacionadas a categorias. Ela utiliza a camada de acesso a dados (Repository) para recuperar as informações do banco de dados.
+  >   A classe `CategoryService` é responsável por implementar a lógica de negócio relacionada às categorias de produtos da aplicação. A documentação detalhada da classe é apresentada a seguir:
   >
-  > Atributos:
+  >   Atributos:
   >
-  > - repository: Atributo que representa a instância da classe CategoryRepository, responsável por prover acesso ao banco de dados.
+  >   - `repository`: atributo do tipo `CategoryRepository`, que representa o repositório de categorias e é injetado automaticamente pelo Spring.
   >
-  > Métodos:
+  >   Construtor:
   >
-  > - findAll(): Método que retorna uma lista com todas as categorias cadastradas no sistema. Ele delega a operação para a instância de CategoryRepository presente na classe.
-  >   - Tipo de retorno: List<Category>
+  >   - Não há construtor explícito definido na classe.
   >
-  > Anotações:
+  >   Métodos:
   >
-  > - @Service: Indica que a classe é um componente do Spring que será injetado automaticamente.
-  > - @Autowired: Indica que a dependência da classe CategoryRepository será injetada automaticamente pelo Spring.
+  >   - `findAll()`: método responsável por buscar todas as categorias cadastradas no banco de dados e retornar uma lista de objetos `CategoryDTO` correspondentes a cada categoria encontrada. O método é transacional e somente faz leitura dos dados. A implementação do método é apresentada a seguir:
+  >     - Tipo de retorno: `List<CategoryDTO>`
+  >     - Parâmetros: nenhum
+  >     - Exceções lançadas: nenhuma
+  >     - Comportamento: o método busca todas as categorias cadastradas no banco de dados através do método `findAll()` do `CategoryRepository`, converte cada objeto `Category` retornado em um objeto `CategoryDTO` através de uma expressão lambda e retorna uma lista com os objetos `CategoryDTO` convertidos.
+  >   - `findById(Long id)`: método responsável por buscar uma categoria específica no banco de dados pelo id informado como parâmetro e retornar um objeto `CategoryDTO` correspondente à categoria encontrada. O método é transacional e somente faz leitura dos dados. A implementação do método é apresentada a seguir:
+  >     - Tipo de retorno: `CategoryDTO`
+  >     - Parâmetros:
+  >       - `id`: parâmetro do tipo `Long` que representa o id da categoria a ser buscada.
+  >     - Exceções lançadas:
+  >       - `NoSuchElementException`: lançada se a categoria não for encontrada no banco de dados.
+  >     - Comportamento: o método busca uma categoria específica no banco de dados pelo id informado como parâmetro, através do método `findById(id)` do `CategoryRepository`. Se a categoria não for encontrada, o método lança uma exceção `NoSuchElementException`. Se a categoria for encontrada, o método converte o objeto `Category` retornado em um objeto `CategoryDTO` e o retorna.
+  >
+  >   A classe `CategoryService` utiliza as seguintes anotações:
+  >
+  >   - `@Service`: anotação que indica que a classe é um componente do Spring que será gerenciado pelo container e que pode ser injetado em outras classes.
+  >   - `@Autowired`: anotação que indica que a dependência `CategoryRepository` será injetada automaticamente pelo Spring.
+  >   - `@Transactional`: anotação que indica que o método é transacional e que a operação é somente leitura.
   >
   > Exemplo de uso: Ao utilizar a classe CategoryService, é possível obter uma lista com todas as categorias cadastradas no sistema através do método findAll(). Para isso, basta injetar a instância de CategoryService em outras classes e chamar o método desejado. Por exemplo:
   >
