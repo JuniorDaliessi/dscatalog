@@ -31,6 +31,14 @@ public class CategoryResources {
 
     @GetMapping(value = "/{id}") //Anotação para indicar que o método responde a requisição do tipo GET do HTTP
     public ResponseEntity<CategoryDTO> findById(@PathVariable Long id) {
+
+        //Poderiamos usar um try catch para tratar a exceção, mas vamos usar o ControllerAdvice (ExceptionHandler)
+        /*try {
+            CategoryDTO dto = service.findById(id);
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        return ResponseEntity.ok().body(dto);*/
         CategoryDTO dto = service.findById(id);
         return ResponseEntity.ok().body(dto);
     }

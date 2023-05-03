@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.devsuperior.backend.dto.CategoryDTO;
 import com.devsuperior.backend.entities.Category;
 import com.devsuperior.backend.repositories.CategoryRepository;
+import com.devsuperior.backend.services.exceptions.EntityNotFoundException;
 
 // Camada de serviço (Service)
 
@@ -38,7 +39,7 @@ public class CategoryService {
     @Transactional(readOnly = true) //Anotação para indicar que o método é transacional e que a operação é somente leitura
     public CategoryDTO findById(Long id) {
         Optional <Category> obj = repository.findById(id);
-        Category entity = obj.get();
+        Category entity = obj.orElseThrow(() -> new EntityNotFoundException("Entity not found"));
         return new CategoryDTO(entity);
     }
     
