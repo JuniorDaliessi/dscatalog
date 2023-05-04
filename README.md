@@ -109,7 +109,7 @@
 - Associações entre entidades (N-N)
 
 ## Comtrolador REST 
-- >- ## Classe CategoryResources
+- >## Classe CategoryResources
   >
   >  A classe `CategoryResources` é um Rest Controller que implementa as rotas REST para manipulação de dados referentes às categorias de um aplicativo. Ela utiliza a biblioteca Spring Framework para gerenciamento de requisições HTTP.
   >
@@ -149,43 +149,132 @@
   >
   >Exemplo de uso:
   >Ao acessar o endpoint "/categories" através de um navegador ou de uma requisição HTTP, será retornado um JSON contendo uma lista com todas as categorias cadastradas no sistema.
+
+
+
+- > ## Classe ResourceExceptionHandler
   >
+  > A classe `ResourceExceptionHandler` é um tratador de exceções que intercepta erros lançados durante o processamento de uma requisição e retorna uma resposta HTTP personalizada.
   >
+  > ### Atributos
+  >
+  > A classe não possui atributos.
+  >
+  > ### Métodos
+  >
+  > A classe possui apenas um método público:
+  >
+  > - `entityNotFound(EntityNotFoundException e, HttpServletRequest request)`: esse método é responsável por tratar exceções do tipo `EntityNotFoundException`, que é lançada quando uma entidade não é encontrada no banco de dados. Ele recebe como parâmetro a exceção lançada e o objeto `HttpServletRequest` que contém informações sobre a requisição que causou o erro. Em seguida, cria um objeto `StandardError`, preenchendo-o com informações sobre o erro, como data e hora, status HTTP, mensagem de erro e caminho da requisição. Por fim, retorna um objeto `ResponseEntity` contendo o objeto `StandardError` no corpo da resposta e o status HTTP 404 (not found).
+  >
+  > ### Anotações
+  >
+  > A classe utiliza a anotação `@ControllerAdvice`, que indica que ela é um tratador de exceções para todas as classes controladoras do aplicativo.
+  >
+  > O método `entityNotFound` utiliza a anotação `@ExceptionHandler(EntityNotFoundException.class)`, que indica que ele é um tratador de exceções específico para o tipo `EntityNotFoundException`.
+  >
+  > ### Retorno
+  >
+  > O método `entityNotFound` retorna um objeto `ResponseEntity` com o status HTTP 404 (not found) e o corpo da resposta contendo um objeto `StandardError` com informações sobre o erro.
+  >
+  > ### Dependências
+  >
+  > A classe depende da classe `EntityNotFoundException` da package `com.devsuperior.backend.services.exceptions` para tratar exceções do tipo `EntityNotFoundException`.
+
+  
+
+- > ## Classe StandardError
+  >
+  > A classe `StandardError` é uma classe auxiliar para lidar com exceções nas rotas REST do aplicativo. Ela é utilizada como corpo de resposta quando ocorrem erros nas requisições.
+  >
+  > ### Atributos
+  >
+  > A classe possui os seguintes atributos:
+  >
+  > - `timestamp`: é um objeto da classe `Instant` que representa o momento em que o erro ocorreu.
+  > - `status`: é um número inteiro que representa o status HTTP da resposta. Por exemplo, 404 indica que o recurso não foi encontrado e 500 indica um erro interno no servidor.
+  > - `error`: é uma string que representa o tipo de erro que ocorreu. Por exemplo, "Not Found" indica que o recurso não foi encontrado.
+  > - `message`: é uma string que representa uma mensagem mais detalhada sobre o erro que ocorreu.
+  > - `path`: é uma string que representa o caminho da rota que causou o erro.
+  >
+  > ### Métodos
+  >
+  > A classe possui os seguintes métodos:
+  >
+  > - `getTimestamp()`: retorna o objeto `Instant` que representa o momento em que o erro ocorreu.
+  > - `setTimestamp(Instant timestamp)`: define o objeto `Instant` que representa o momento em que o erro ocorreu.
+  > - `getStatus()`: retorna o número inteiro que representa o status HTTP da resposta.
+  > - `setStatus(Integer status)`: define o número inteiro que representa o status HTTP da resposta.
+  > - `getError()`: retorna a string que representa o tipo de erro que ocorreu.
+  > - `setError(String error)`: define a string que representa o tipo de erro que ocorreu.
+  > - `getMessage()`: retorna a string que representa uma mensagem mais detalhada sobre o erro que ocorreu.
+  > - `setMessage(String message)`: define a string que representa uma mensagem mais detalhada sobre o erro que ocorreu.
+  > - `getPath()`: retorna a string que representa o caminho da rota que causou o erro.
+  > - `setPath(String path)`: define a string que representa o caminho da rota que causou o erro.
+  >
+  > ### Construtor
+  >
+  > A classe possui um construtor padrão vazio, que não recebe nenhum argumento.
+  >
+  > ### Utilização
+  >
+  > A classe é utilizada para encapsular informações sobre erros que ocorrem nas rotas REST do aplicativo. Quando um erro ocorre, um objeto `StandardError` é criado com as informações relevantes sobre o erro e é enviado como resposta ao cliente.
+  >
+  > ### Exemplo de Uso
+  >
+  > Suponha que um cliente faça uma requisição para a rota `/products` com um ID de categoria inválido. O servidor pode responder com um objeto `StandardError` que contém informações sobre o erro, como o seguinte:
+  >
+  > ```java
+  > json
+  > {
+  >   "timestamp": "2023-05-03T18:29:36.210Z",
+  >   "status": 404,
+  >   "error": "Not Found",
+  >   "message": "Category not found",
+  >   "path": "/products?categoryId=9999"
+  > }
+  > ```
+
+
 
 ## Camada de serviço
 
-* > - Classe `CategoryService`
+* > ## Classe `CategoryService` 
   >
-  >   A classe `CategoryService` é responsável por implementar a lógica de negócio relacionada às categorias de produtos da aplicação. A documentação detalhada da classe é apresentada a seguir:
+  > A classe `CategoryService` é responsável por implementar a lógica de negócio para a manipulação de dados de categoria de um aplicativo. Ela utiliza a biblioteca Spring Framework para acesso ao banco de dados.
   >
-  >   Atributos:
+  > ### Atributos
   >
-  >   - `repository`: atributo do tipo `CategoryRepository`, que representa o repositório de categorias e é injetado automaticamente pelo Spring.
+  > A classe possui apenas um atributo:
   >
-  >   Construtor:
+  > - `repository`: é uma instância da classe `CategoryRepository` injetada automaticamente pelo Spring Framework através da anotação `@Autowired`. Essa classe é responsável por realizar as operações de CRUD (create, read, update, delete) no banco de dados para a entidade `Category`.
   >
-  >   - Não há construtor explícito definido na classe.
+  > ### Métodos
   >
-  >   Métodos:
+  > A classe possui dois métodos públicos:
   >
-  >   - `findAll()`: método responsável por buscar todas as categorias cadastradas no banco de dados e retornar uma lista de objetos `CategoryDTO` correspondentes a cada categoria encontrada. O método é transacional e somente faz leitura dos dados. A implementação do método é apresentada a seguir:
-  >     - Tipo de retorno: `List<CategoryDTO>`
-  >     - Parâmetros: nenhum
-  >     - Exceções lançadas: nenhuma
-  >     - Comportamento: o método busca todas as categorias cadastradas no banco de dados através do método `findAll()` do `CategoryRepository`, converte cada objeto `Category` retornado em um objeto `CategoryDTO` através de uma expressão lambda e retorna uma lista com os objetos `CategoryDTO` convertidos.
-  >   - `findById(Long id)`: método responsável por buscar uma categoria específica no banco de dados pelo id informado como parâmetro e retornar um objeto `CategoryDTO` correspondente à categoria encontrada. O método é transacional e somente faz leitura dos dados. A implementação do método é apresentada a seguir:
-  >     - Tipo de retorno: `CategoryDTO`
-  >     - Parâmetros:
-  >       - `id`: parâmetro do tipo `Long` que representa o id da categoria a ser buscada.
-  >     - Exceções lançadas:
-  >       - `NoSuchElementException`: lançada se a categoria não for encontrada no banco de dados.
-  >     - Comportamento: o método busca uma categoria específica no banco de dados pelo id informado como parâmetro, através do método `findById(id)` do `CategoryRepository`. Se a categoria não for encontrada, o método lança uma exceção `NoSuchElementException`. Se a categoria for encontrada, o método converte o objeto `Category` retornado em um objeto `CategoryDTO` e o retorna.
+  > - `findAll()`: esse método retorna uma lista de objetos `CategoryDTO` com todas as categorias cadastradas no banco de dados. Ele utiliza a anotação `@Transactional(readOnly = true)` para indicar que a operação é somente leitura. Esse método chama o método `findAll()` da classe `CategoryRepository` para obter uma lista de objetos `Category`. Em seguida, usa uma expressão lambda para converter cada objeto `Category` em um objeto `CategoryDTO`. Por fim, retorna a lista de objetos `CategoryDTO`.
+  > - `findById(Long id)`: esse método retorna um objeto `CategoryDTO` correspondente ao id fornecido. Ele utiliza a anotação `@Transactional(readOnly = true)` para indicar que a operação é somente leitura. Esse método chama o método `findById(Long id)` da classe `CategoryRepository`, passando o parâmetro `id`. Em seguida, usa a classe `Optional` para verificar se o objeto `Category` foi encontrado no banco de dados. Se não foi encontrado, lança uma exceção `EntityNotFoundException`. Caso contrário, converte o objeto `Category` em um objeto `CategoryDTO` e retorna o objeto `CategoryDTO`.
   >
-  >   A classe `CategoryService` utiliza as seguintes anotações:
+  > ### Anotações
   >
-  >   - `@Service`: anotação que indica que a classe é um componente do Spring que será gerenciado pelo container e que pode ser injetado em outras classes.
-  >   - `@Autowired`: anotação que indica que a dependência `CategoryRepository` será injetada automaticamente pelo Spring.
-  >   - `@Transactional`: anotação que indica que o método é transacional e que a operação é somente leitura.
+  > A classe utiliza duas anotações do Spring Framework:
+  >
+  > - `@Service`: essa anotação indica que a classe é um componente do Spring que será injetado automaticamente em outras classes que dependem dela.
+  > - `@Autowired`: essa anotação indica que a dependência `CategoryRepository` será injetada automaticamente pelo Spring Framework.
+  >
+  > Além dessas anotações, cada método utiliza a anotação `@Transactional(readOnly = true)` para indicar que a operação é somente leitura no banco de dados.
+  >
+  > ### Retorno
+  >
+  > Os dois métodos da classe retornam objetos `CategoryDTO`.
+  >
+  > ### Dependências
+  >
+  > A classe `CategoryService` depende da classe `CategoryRepository`, que é injetada automaticamente pelo Spring Framework através da anotação `@Autowired`.
+  >
+  > ## Conclusão
+  >
+  > A classe `CategoryService` é responsável por implementar a lógica de negócio para a manipulação de dados de categoria de um aplicativo utilizando a biblioteca Spring Framework. Ela possui métodos para obter a lista de todas as categorias e obter uma categoria específica pelo seu id. A classe depende da classe `CategoryRepository` para realizar as operações de CRUD no banco de dados. Os métodos da classe retornam objetos `CategoryDTO`.
   >
   > Exemplo de uso: Ao utilizar a classe CategoryService, é possível obter uma lista com todas as categorias cadastradas no sistema através do método findAll(). Para isso, basta injetar a instância de CategoryService em outras classes e chamar o método desejado. Por exemplo:
   >
@@ -205,8 +294,28 @@
   > ```
 
 > Neste exemplo, a classe ProductService utiliza a instância de  CategoryService para obter a lista de todas as categorias cadastradas no sistema.
->
-> 
+
+
+
+* > ## Classe EntityNotFoundException
+  >
+  > A classe `EntityNotFoundException` é uma exceção personalizada que pode ser lançada por um serviço devido à não existência de uma entidade solicitada.
+  >
+  > ### Construtor
+  >
+  > A classe possui um único construtor que recebe uma mensagem de erro como parâmetro:
+  >
+  > - `EntityNotFoundException(String msg)`: cria uma nova exceção com a mensagem de erro especificada.
+  >
+  > ### Herança
+  >
+  > A classe herda da classe `RuntimeException`, que é uma classe de exceção não verificada. Isso significa que o compilador não obriga a lidar com essa exceção (através de uma cláusula try-catch, por exemplo), tornando a classe uma opção conveniente para lançar exceções em serviços.
+  >
+  > ## Conclusão
+  >
+  > A classe `EntityNotFoundException` é uma exceção personalizada que pode ser lançada por um serviço quando uma entidade solicitada não existe. Isso permite que o serviço notifique o cliente (ou a camada de controle) de que algo deu errado de forma clara e precisa.
+
+  
 
 ## Camada de acesso a dados (Repository)
 
