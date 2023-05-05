@@ -19,13 +19,13 @@ public class ResourceExceptionHandler {
 
         StandardError err = new StandardError(); 
 
-        err.setTimestamp(Instant.now()); 
-        err.setStatus(HttpStatus.NOT_FOUND.value());
-        err.setError("Resource not found");
-        err.setMessage(e.getMessage());
-        err.setPath(request.getRequestURI());
+        err.setTimestamp(Instant.now()); //Pega o instante atual do sistema
+        err.setStatus(HttpStatus.NOT_FOUND.value()); //Código HTTP 404
+        err.setError("Resource not found"); //Mensagem de erro
+        err.setMessage(e.getMessage()); //Mensagem da exceção
+        err.setPath(request.getRequestURI()); //Pega o caminho da requisição
         
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err); //Retorna a resposta com o código HTTP 404 e o corpo com o objeto err
     }
     
 }

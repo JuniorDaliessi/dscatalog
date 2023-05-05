@@ -111,44 +111,46 @@
 ## Comtrolador REST 
 - >## Classe CategoryResources
   >
-  >  A classe `CategoryResources` é um Rest Controller que implementa as rotas REST para manipulação de dados referentes às categorias de um aplicativo. Ela utiliza a biblioteca Spring Framework para gerenciamento de requisições HTTP.
+  >A classe `CategoryResources` é um Rest Controller que implementa as rotas REST para manipulação de dados referentes às categorias de um aplicativo. Ela utiliza a biblioteca Spring Framework para gerenciamento de requisições HTTP.
   >
-  >  ### Atributos
+  >### Atributos
   >
-  >  A classe possui apenas um atributo:
+  >A classe possui apenas um atributo:
   >
-  >  - `service`: é uma instância da classe `CategoryService` injetada automaticamente pelo Spring Framework através da anotação `@Autowired`. Essa classe é responsável por acessar os dados de categoria no banco de dados e realizar operações de CRUD (create, read, update, delete).
+  > - `service`: é uma instância da classe `CategoryService` injetada automaticamente pelo Spring Framework através da anotação `@Autowired`. Essa classe é responsável por acessar os dados de categoria no banco de dados e realizar operações de CRUD (create, read, update, delete).
   >
-  >  ### Métodos
+  > ### Métodos
   >
-  >  A classe possui dois métodos públicos:
+  > A classe possui dois métodos públicos:
   >
-  >  - `findAll()`: esse método responde a uma requisição do tipo GET para a rota `/categories`. Ele utiliza a anotação `@GetMapping` para indicar que responde a esse tipo de requisição. Esse método chama o método `findAll()` da classe `CategoryService` para obter uma lista de objetos `CategoryDTO`. Em seguida, retorna um objeto `ResponseEntity` contendo a lista de objetos `CategoryDTO` no corpo da resposta.
-  >  - `findById(Long id)`: esse método responde a uma requisição do tipo GET para a rota `/categories/{id}`, onde `{id}` é um parâmetro da rota que representa o id da categoria. Ele utiliza a anotação `@GetMapping` para indicar que responde a esse tipo de requisição e recebe o parâmetro `id` com a anotação `@PathVariable`. Esse método chama o método `findById(Long id)` da classe `CategoryService`, passando o parâmetro `id`. Em seguida, retorna um objeto `ResponseEntity` contendo o objeto `CategoryDTO` no corpo da resposta.
+  > - `findAll()`: esse método responde a uma requisição do tipo GET para a rota `/categories`. Ele utiliza a anotação `@GetMapping` para indicar que responde a esse tipo de requisição. Esse método chama o método `findAll()` da classe `CategoryService` para obter uma lista de objetos `CategoryDTO`. Em seguida, retorna um objeto `ResponseEntity` contendo a lista de objetos `CategoryDTO` no corpo da resposta.
+  > - `findById(Long id)`: esse método responde a uma requisição do tipo GET para a rota `/categories/{id}`, onde `{id}` é um parâmetro da rota que representa o id da categoria. Ele utiliza a anotação `@GetMapping` para indicar que responde a esse tipo de requisição e recebe o parâmetro `id` com a anotação `@PathVariable`. Esse método chama o método `findById(Long id)` da classe `CategoryService`, passando o parâmetro `id`. Em seguida, retorna um objeto `ResponseEntity` contendo o objeto `CategoryDTO` no corpo da resposta.
   >
-  >  ### Anotações
+  > ### Anotações
   >
-  >  A classe utiliza duas anotações do Spring Framework:
+  > A classe utiliza duas anotações do Spring Framework:
   >
-  >  - `@RestController`: essa anotação indica que a classe é um Rest Controller, ou seja, um controlador de rotas REST.
-  >  - `@RequestMapping(value = "/categories")`: essa anotação indica o caminho da rota principal do recurso, que é `/categories`.
+  > - `@RestController`: essa anotação indica que a classe é um Rest Controller, ou seja, um controlador de rotas REST.
+  > - `@RequestMapping(value = "/categories")`: essa anotação indica o caminho da rota principal do recurso, que é `/categories`.
   >
-  >  Além dessas anotações, cada método utiliza a anotação `@GetMapping` para indicar que responde a uma requisição do tipo GET.
+  > Além dessas anotações, cada método utiliza a anotação `@GetMapping` para indicar que responde a uma requisição do tipo GET.
   >
-  >  ### Retorno
+  > ### Retorno
   >
-  >  Os dois métodos da classe retornam objetos `ResponseEntity` com o status HTTP 200 (ok) e o corpo da resposta contendo a lista de objetos `CategoryDTO` ou o objeto `CategoryDTO` correspondente ao id fornecido.
+  > Os dois métodos da classe retornam objetos `ResponseEntity` com o status HTTP 200 (ok) e o corpo da resposta contendo a lista de objetos `CategoryDTO` ou o objeto `CategoryDTO` correspondente ao id fornecido.
   >
-  >  ### Dependências
+  > ### Dependências
   >
-  >  A classe `CategoryResources` depende da classe `CategoryService`, que é injetada automaticamente pelo Spring Framework através da anotação `@Autowired`.
+  > A classe `CategoryResources` depende da classe `CategoryService`, que é injetada automaticamente pelo Spring Framework através da anotação `@Autowired`.
   >
-  >  ## Conclusão
+  > ## Conclusão
   >
-  >  A classe `CategoryResources` é uma implementação de um Rest Controller para manipulação de dados de categoria de um aplicativo utilizando a biblioteca Spring Framework. Ela possui métodos para obter a lista de todas as categorias e obter uma categoria específica pelo seu id. A classe depende da classe `CategoryService` para realizar as operações de CRUD no banco de dados.
+  > A classe `CategoryResources` é uma implementação de um Rest Controller para manipulação de dados de categoria de um aplicativo utilizando a biblioteca Spring Framework. Ela possui métodos para obter a lista de todas as categorias e obter uma categoria específica pelo seu id. A classe depende da classe `CategoryService` para realizar as operações de CRUD no banco de dados.
   >
   >Exemplo de uso:
-  >Ao acessar o endpoint "/categories" através de um navegador ou de uma requisição HTTP, será retornado um JSON contendo uma lista com todas as categorias cadastradas no sistema.
+  >Ao acessar o endpoint "/categories" através de um navegador ou de uma requisição HTTP, será retornado um 
+  >
+  >JSON contendo uma lista com todas as categorias cadastradas no sistema.
 
 
 
@@ -182,6 +184,8 @@
 
   
 
+  
+  
 - > ## Classe StandardError
   >
   > A classe `StandardError` é uma classe auxiliar para lidar com exceções nas rotas REST do aplicativo. Ela é utilizada como corpo de resposta quando ocorrem erros nas requisições.
