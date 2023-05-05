@@ -117,40 +117,127 @@
   >
   >A classe possui apenas um atributo:
   >
-  > - `service`: é uma instância da classe `CategoryService` injetada automaticamente pelo Spring Framework através da anotação `@Autowired`. Essa classe é responsável por acessar os dados de categoria no banco de dados e realizar operações de CRUD (create, read, update, delete).
+  >- `service`: é uma instância da classe `CategoryService` injetada automaticamente pelo Spring Framework através da anotação `@Autowired`. Essa classe é responsável por acessar os dados de categoria no banco de dados e realizar operações de CRUD (create, read, update, delete).
   >
-  > ### Métodos
+  >### Métodos
   >
-  > A classe possui dois métodos públicos:
+  >A classe possui dois métodos públicos:
   >
-  > - `findAll()`: esse método responde a uma requisição do tipo GET para a rota `/categories`. Ele utiliza a anotação `@GetMapping` para indicar que responde a esse tipo de requisição. Esse método chama o método `findAll()` da classe `CategoryService` para obter uma lista de objetos `CategoryDTO`. Em seguida, retorna um objeto `ResponseEntity` contendo a lista de objetos `CategoryDTO` no corpo da resposta.
-  > - `findById(Long id)`: esse método responde a uma requisição do tipo GET para a rota `/categories/{id}`, onde `{id}` é um parâmetro da rota que representa o id da categoria. Ele utiliza a anotação `@GetMapping` para indicar que responde a esse tipo de requisição e recebe o parâmetro `id` com a anotação `@PathVariable`. Esse método chama o método `findById(Long id)` da classe `CategoryService`, passando o parâmetro `id`. Em seguida, retorna um objeto `ResponseEntity` contendo o objeto `CategoryDTO` no corpo da resposta.
+  >- `findAll()`: esse método responde a uma requisição do tipo GET para a rota `/categories`. Ele utiliza a anotação `@GetMapping` para indicar que responde a esse tipo de requisição. Esse método chama o método `findAll()` da classe `CategoryService` para obter uma lista de objetos `CategoryDTO`. Em seguida, retorna um objeto `ResponseEntity` contendo a lista de objetos `CategoryDTO` no corpo da resposta.
+  >- `findById(Long id)`: esse método responde a uma requisição do tipo GET para a rota `/categories/{id}`, onde `{id}` é um parâmetro da rota que representa o id da categoria. Ele utiliza a anotação `@GetMapping` para indicar que responde a esse tipo de requisição e recebe o parâmetro `id` com a anotação `@PathVariable`. Esse método chama o método `findById(Long id)` da classe `CategoryService`, passando o parâmetro `id`. Em seguida, retorna um objeto `ResponseEntity` contendo o objeto `CategoryDTO` no corpo da resposta.
   >
-  > ### Anotações
+  >### Anotações
   >
-  > A classe utiliza duas anotações do Spring Framework:
+  >A classe utiliza duas anotações do Spring Framework:
   >
-  > - `@RestController`: essa anotação indica que a classe é um Rest Controller, ou seja, um controlador de rotas REST.
-  > - `@RequestMapping(value = "/categories")`: essa anotação indica o caminho da rota principal do recurso, que é `/categories`.
+  >- `@RestController`: essa anotação indica que a classe é um Rest Controller, ou seja, um controlador de rotas REST.
+  >- `@RequestMapping(value = "/categories")`: essa anotação indica o caminho da rota principal do recurso, que é `/categories`.
   >
-  > Além dessas anotações, cada método utiliza a anotação `@GetMapping` para indicar que responde a uma requisição do tipo GET.
+  >Além dessas anotações, cada método utiliza a anotação `@GetMapping` para indicar que responde a uma requisição do tipo GET.
   >
-  > ### Retorno
+  >### Retorno
   >
-  > Os dois métodos da classe retornam objetos `ResponseEntity` com o status HTTP 200 (ok) e o corpo da resposta contendo a lista de objetos `CategoryDTO` ou o objeto `CategoryDTO` correspondente ao id fornecido.
+  >Os dois métodos da classe retornam objetos `ResponseEntity` com o status HTTP 200 (ok) e o corpo da resposta contendo a lista de objetos `CategoryDTO` ou o objeto `CategoryDTO` correspondente ao id fornecido.
   >
-  > ### Dependências
+  >### Dependências
   >
-  > A classe `CategoryResources` depende da classe `CategoryService`, que é injetada automaticamente pelo Spring Framework através da anotação `@Autowired`.
+  >A classe `CategoryResources` depende da classe `CategoryService`, que é injetada automaticamente pelo Spring Framework através da anotação `@Autowired`.
   >
-  > ## Conclusão
+  >## Conclusão
   >
-  > A classe `CategoryResources` é uma implementação de um Rest Controller para manipulação de dados de categoria de um aplicativo utilizando a biblioteca Spring Framework. Ela possui métodos para obter a lista de todas as categorias e obter uma categoria específica pelo seu id. A classe depende da classe `CategoryService` para realizar as operações de CRUD no banco de dados.
+  >A classe `CategoryResources` é uma implementação de um Rest Controller para manipulação de dados de categoria de um aplicativo utilizando a biblioteca Spring Framework. Ela possui métodos para obter a lista de todas as categorias e obter uma categoria específica pelo seu id. A classe depende da classe `CategoryService` para realizar as operações de CRUD no banco de dados.
   >
   >Exemplo de uso:
   >Ao acessar o endpoint "/categories" através de um navegador ou de uma requisição HTTP, será retornado um 
   >
   >JSON contendo uma lista com todas as categorias cadastradas no sistema.
+  >
+  >A classe `CategoryResources` é um controlador REST que  disponibiliza endpoints para operações CRUD (Create, Read, Update e  Delete) de uma entidade de categoria. Aqui estão alguns exemplos de como essa classe pode ser usada:
+  >
+  >
+  >
+  >1. Para recuperar todas as categorias:
+  >
+  >```json
+  >bash
+  >GET http://localhost:8080/categories
+  >
+  >Response:
+  >[
+  >    {
+  >        "id": 1,
+  >        "name": "Eletrônicos"
+  >    },
+  >    {
+  >        "id": 2,
+  >        "name": "Livros"
+  >    },
+  >    {
+  >        "id": 3,
+  >        "name": "Roupas"
+  >    }
+  >]
+  >```
+  >
+  >1. Para recuperar uma categoria específica pelo seu ID:
+  >
+  >```json
+  >bash
+  >GET http://localhost:8080/categories/1
+  >
+  >Response:
+  >{
+  >    "id": 1,
+  >    "name": "Eletrônicos"
+  >}
+  >```
+  >
+  >1. Para criar uma nova categoria:
+  >
+  >```
+  >bash
+  >POST http://localhost:8080/categories
+  >
+  >Request:
+  >{
+  >    "name": "Brinquedos"
+  >}
+  >
+  >Response:
+  >{
+  >    "id": 4,
+  >    "name": "Brinquedos"
+  >}
+  >```
+  >
+  >1. Para atualizar uma categoria existente:
+  >
+  >```json
+  >bash
+  >PUT http://localhost:8080/categories/4
+  >
+  >Request:
+  >{
+  >    "name": "Jogos"
+  >}
+  >
+  >Response:
+  >{
+  >    "id": 4,
+  >    "name": "Jogos"
+  >}
+  >```
+  >
+  >1. Para excluir uma categoria existente:
+  >
+  >```json
+  >bash
+  >DELETE http://localhost:8080/categories/4
+  >
+  >Response: 204 No Content
+  >```
+  >
+  >Esses são apenas alguns exemplos de como a classe `CategoryResources` pode ser usada. Os endpoints e as respostas podem variar de acordo com as necessidades do projeto.
 
 
 
@@ -242,48 +329,46 @@
 
 ## Camada de serviço
 
-* > ## Classe `CategoryService` 
-  >
-  > A classe `CategoryService` é responsável por implementar a lógica de negócio para a manipulação de dados de categoria de um aplicativo. Ela utiliza a biblioteca Spring Framework para acesso ao banco de dados.
-  >
-  > ### Atributos
-  >
-  > A classe possui apenas um atributo:
-  >
-  > - `repository`: é uma instância da classe `CategoryRepository` injetada automaticamente pelo Spring Framework através da anotação `@Autowired`. Essa classe é responsável por realizar as operações de CRUD (create, read, update, delete) no banco de dados para a entidade `Category`.
-  >
-  > ### Métodos
-  >
-  > A classe possui dois métodos públicos:
-  >
-  > - `findAll()`: esse método retorna uma lista de objetos `CategoryDTO` com todas as categorias cadastradas no banco de dados. Ele utiliza a anotação `@Transactional(readOnly = true)` para indicar que a operação é somente leitura. Esse método chama o método `findAll()` da classe `CategoryRepository` para obter uma lista de objetos `Category`. Em seguida, usa uma expressão lambda para converter cada objeto `Category` em um objeto `CategoryDTO`. Por fim, retorna a lista de objetos `CategoryDTO`.
-  > - `findById(Long id)`: esse método retorna um objeto `CategoryDTO` correspondente ao id fornecido. Ele utiliza a anotação `@Transactional(readOnly = true)` para indicar que a operação é somente leitura. Esse método chama o método `findById(Long id)` da classe `CategoryRepository`, passando o parâmetro `id`. Em seguida, usa a classe `Optional` para verificar se o objeto `Category` foi encontrado no banco de dados. Se não foi encontrado, lança uma exceção `EntityNotFoundException`. Caso contrário, converte o objeto `Category` em um objeto `CategoryDTO` e retorna o objeto `CategoryDTO`.
-  >
-  > ### Anotações
-  >
-  > A classe utiliza duas anotações do Spring Framework:
-  >
-  > - `@Service`: essa anotação indica que a classe é um componente do Spring que será injetado automaticamente em outras classes que dependem dela.
-  > - `@Autowired`: essa anotação indica que a dependência `CategoryRepository` será injetada automaticamente pelo Spring Framework.
-  >
-  > Além dessas anotações, cada método utiliza a anotação `@Transactional(readOnly = true)` para indicar que a operação é somente leitura no banco de dados.
-  >
-  > ### Retorno
-  >
-  > Os dois métodos da classe retornam objetos `CategoryDTO`.
-  >
-  > ### Dependências
-  >
-  > A classe `CategoryService` depende da classe `CategoryRepository`, que é injetada automaticamente pelo Spring Framework através da anotação `@Autowired`.
-  >
-  > ## Conclusão
-  >
-  > A classe `CategoryService` é responsável por implementar a lógica de negócio para a manipulação de dados de categoria de um aplicativo utilizando a biblioteca Spring Framework. Ela possui métodos para obter a lista de todas as categorias e obter uma categoria específica pelo seu id. A classe depende da classe `CategoryRepository` para realizar as operações de CRUD no banco de dados. Os métodos da classe retornam objetos `CategoryDTO`.
+* > > ## Classe `CategoryService`
+  >>
+  > > A classe `CategoryService` é responsável por implementar a lógica de negócio para a manipulação de dados de categoria de um aplicativo. Ela utiliza a biblioteca Spring Framework para acesso ao banco de dados.
+  >>
+  > > ### Atributos
+  >>
+  > > A classe possui um atributo:
+  >>
+  > > - `repository`: é uma instância da classe `CategoryRepository` injetada automaticamente pelo Spring Framework através da anotação `@Autowired`. Essa classe é responsável por realizar as operações de CRUD (create, read, update, delete) no banco de dados para a entidade `Category`.
+  >>
+  > > ### Métodos
+  >>
+  > > A classe possui três métodos públicos:
+  >>
+  > > - `findAll()`: esse método retorna uma lista de objetos `CategoryDTO` com todas as categorias cadastradas no banco de dados. Ele utiliza a anotação `@Transactional(readOnly = true)` para indicar que a operação é somente leitura. Esse método chama o método `findAll()` da classe `CategoryRepository` para obter uma lista de objetos `Category`. Em seguida, usa uma expressão lambda para converter cada objeto `Category` em um objeto `CategoryDTO`. Por fim, retorna a lista de objetos `CategoryDTO`.
+  > > - `findById(Long id)`: esse método retorna um objeto `CategoryDTO` correspondente ao id fornecido. Ele utiliza a anotação `@Transactional(readOnly = true)` para indicar que a operação é somente leitura. Esse método chama o método `findById(Long id)` da classe `CategoryRepository`, passando o parâmetro `id`. Em seguida, usa a classe `Optional` para verificar se o objeto `Category` foi encontrado no banco de dados. Se não foi encontrado, lança uma exceção `EntityNotFoundException`. Caso contrário, converte o objeto `Category` em um objeto `CategoryDTO` e retorna o objeto `CategoryDTO`.
+  >> - `insert(CategoryDTO dto)`: esse método cria uma nova categoria no banco de dados. Ele instancia um novo objeto `Category`, define o nome da categoria e salva no banco de dados usando o método `save()` da classe `CategoryRepository`. Em seguida, converte o objeto `Category` em um objeto `CategoryDTO` e retorna o objeto `CategoryDTO`.
+  > >
+  >> ### Anotações
+  > >
+  >> A classe utiliza a anotação `@Service` do Spring Framework para indicar que a classe é um componente do Spring que será injetado automaticamente em outras classes que dependem dela.
+  > >
+  > > Os métodos da classe utilizam a anotação `@Transactional(readOnly = true)` para indicar que a operação é somente leitura no banco de dados.
+  >>
+  > > A classe depende da classe `CategoryRepository`, que é injetada automaticamente pelo Spring Framework através da anotação `@Autowired`.
+  >>
+  > > ### Retorno
+  >>
+  > > Os métodos `findAll()` e `findById(Long id)` da classe retornam objetos `CategoryDTO`.
+  >>
+  > > O método `insert(CategoryDTO dto)` retorna o objeto `CategoryDTO` correspondente à categoria criada.
+  >>
+  > > ## Conclusão
+  >>
+  > > A classe `CategoryService` é responsável por implementar a lógica de negócio para a manipulação de dados de categoria de um aplicativo utilizando a biblioteca Spring Framework. Ela possui métodos para obter a lista de todas as categorias, obter uma categoria específica pelo seu id e criar uma nova categoria. A classe depende da classe `CategoryRepository` para realizar as operações de CRUD no banco de dados. Os métodos `findAll()` e `findById(Long id)` da classe retornam objetos `CategoryDTO`, enquanto o método `insert(CategoryDTO dto)` retorna o objeto
   >
   > Exemplo de uso: Ao utilizar a classe CategoryService, é possível obter uma lista com todas as categorias cadastradas no sistema através do método findAll(). Para isso, basta injetar a instância de CategoryService em outras classes e chamar o método desejado. Por exemplo:
   >
   > ```java
-  > @Service
+  >@Service
   > public class ProductService {
   > 
   > @Autowired
