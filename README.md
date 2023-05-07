@@ -6,9 +6,177 @@
 
 - Criar projeto Spring Boot
 
+- * > Para criar um projeto Spring Boot, siga as etapas abaixo:
+    >
+    > Passo 1: Configuração do ambiente
+    >
+    > Certifique-se de ter o ambiente de desenvolvimento Java configurado corretamente. Você precisará ter o JDK (Java Development Kit) instalado em seu sistema.
+    >
+    > Passo 2: Inicialização do projeto
+    >
+    > Existem várias maneiras de inicializar um projeto Spring Boot. Uma opção é usar o Spring Initializr, que é uma ferramenta online fornecida pela Spring para criar projetos Spring Boot personalizados com base nas suas necessidades. Siga os passos abaixo para criar um projeto Spring Boot usando o Spring Initializr:
+    >
+    > 1. Acesse o site do Spring Initializr: [https://start.spring.io/](https://start.spring.io/).
+    > 2. Selecione as configurações do projeto, como a versão do Spring Boot, a linguagem de programação (Java ou Kotlin), as dependências necessárias e o sistema de compilação (Maven ou Gradle).
+    > 3. Clique no botão "Generate" para baixar o arquivo ZIP do projeto.
+    >
+    > Passo 3: Importar o projeto
+    >
+    > Após baixar o arquivo ZIP do projeto, descompacte-o em uma pasta de sua escolha. Em seguida, importe o projeto em sua IDE de desenvolvimento. As etapas para importar o projeto podem variar dependendo da IDE que você está usando. Aqui estão algumas IDEs populares e como importar o projeto nelas:
+    >
+    > - IntelliJ IDEA: Abra o IntelliJ IDEA, vá em "File" > "Open" e selecione a pasta raiz do projeto.
+    > - Eclipse: Abra o Eclipse, vá em "File" > "Import" > "Existing Gradle Project" (ou "Existing Maven Project") e selecione a pasta raiz do projeto.
+    >
+    > Passo 4: Estrutura do projeto
+    >
+    > Após importar o projeto, você verá a estrutura básica de um projeto Spring Boot. Geralmente, você terá a seguinte estrutura de pastas e arquivos:
+    >
+    > ```
+    > - src
+    >   - main
+    >     - java
+    >       - com
+    >         - exemplo
+    >           - Application.java
+    >     - resources
+    >       - application.properties (ou application.yml)
+    >   - test
+    >     - java
+    >       - com
+    >         - exemplo
+    >           - ApplicationTests.java
+    > - pom.xml (para projetos Maven) ou build.gradle (para projetos Gradle)
+    > ```
+    >
+    > A classe `Application.java` é a classe principal do projeto que inicia a aplicação Spring Boot. O arquivo `application.properties` ou `application.yml` contém as configurações da aplicação, como as configurações do banco de dados, as portas do servidor, entre outras. Os arquivos de teste estão na pasta `test`.
+    >
+    > Passo 5: Executar o projeto
+    >
+    > Depois de importar o projeto, você pode executá-lo. Dependendo da IDE que você está usando, você pode executar o projeto clicando com o botão direito na classe `Application.java` e selecionando a opção "Run" ou "Run as Spring Boot App". Outra opção é executar o projeto por linha de comando usando o Maven ou o Gradle.
+    >
+    > Ao executar o projeto, a aplicação Spring Boot será inicializada e estará pronta para receber requisições.
+    >
+    > Espero que este guia básico tenha ajudado a criar um projeto Spring Boot. A partir daqui, você pode começar a adicionar suas classes, controladores, serviços, etc., de acordo com os requisitos do seu projeto.
+
 - Criar monorepo Git
 
+- * > Para criar um monorepo Git, siga as etapas abaixo:
+    >
+    > Passo 1: Inicialização do repositório
+    >
+    > 1. Abra o terminal ou a linha de comando na pasta raiz do seu projeto.
+    > 2. Execute o seguinte comando para inicializar um novo repositório Git:
+    >
+    > ```
+    > git init
+    > ```
+    >
+    > Passo 2: Organização das pastas
+    >
+    > 1. No seu projeto, organize as diferentes partes em subpastas.
+    >    Por exemplo, se você tem dois projetos A e B, crie duas subpastas dentro do seu repositório para cada um deles:
+    >
+    > ```
+    > meu-monorepo/
+    >   - projeto-a/
+    >   - projeto-b/
+    > ```
+    >
+    > Passo 3: Adicionar arquivos
+    >
+    > 1. Dentro de cada subpasta, adicione os arquivos relevantes ao projeto usando o comando `git add`.
+    >    Por exemplo:
+    >
+    > ```
+    > cd projeto-a/
+    > git add .
+    > ```
+    >
+    > 2. Repita o mesmo processo para o projeto B:
+    >
+    > ```
+    > cd ../projeto-b/
+    > git add .
+    > ```
+    >
+    > Passo 4: Commit inicial
+    >
+    > 1. Faça o commit dos arquivos adicionados usando o comando `git commit`.
+    >    Por exemplo:
+    >
+    > ```
+    > git commit -m "Commit inicial do projeto A"
+    > ```
+    >
+    > 2. Repita o mesmo processo para o projeto B:
+    >
+    > ```
+    > cd ../projeto-b/
+    > git commit -m "Commit inicial do projeto B"
+    > ```
+    >
+    > Passo 5: Criação de um repositório remoto
+    >
+    > 1. Crie um repositório remoto em um serviço de hospedagem Git, como GitHub, GitLab ou Bitbucket.
+    > 2. Siga as instruções fornecidas pelo serviço de hospedagem para criar um novo repositório vazio.
+    >
+    > Passo 6: Vinculação do repositório remoto
+    >
+    > 1. No terminal, adicione o URL do repositório remoto como um novo remote usando o comando `git remote add`.
+    >    Por exemplo:
+    >
+    > ```
+    > git remote add origin <URL do repositório remoto>
+    > ```
+    >
+    > 2. Verifique se o remote foi adicionado corretamente usando o comando `git remote -v`.
+    >
+    > Passo 7: Push dos commits
+    >
+    > 1. Faça o push dos commits locais para o repositório remoto usando o comando `git push`.
+    >    Por exemplo:
+    >
+    > ```
+    > git push origin master
+    > ```
+    >
+    > 2. Repita o mesmo processo para o projeto B:
+    >
+    > ```
+    > cd ../projeto-b/
+    > git push origin master
+    > ```
+    >
+    > Agora você tem um monorepo Git configurado com dois projetos diferentes. Você pode continuar trabalhando em cada projeto individualmente dentro do monorepo, fazendo commits e pushes para o repositório remoto conforme necessário.
+    >
+    > Lembre-se de adaptar as etapas às suas necessidades, adicionando ou removendo projetos e organizando as pastas conforme a estrutura do seu monorepo.
+
 - Organizar o projeto em camadas Web Service
+
+- * > Ao organizar um projeto em camadas para desenvolvimento de um Web Service, é comum utilizar a arquitetura MVC (Model-View-Controller) ou uma variação dela, como a arquitetura MVVM (Model-View-ViewModel) ou a arquitetura em camadas. Aqui está uma forma de organizar o projeto em camadas utilizando a arquitetura em camadas:
+    >
+    > 1. Camada de Apresentação (Controller):
+    >    - Responsável por receber as requisições HTTP e gerenciar o fluxo de dados entre a interface de usuário e as outras camadas.
+    >    - Contém os controladores (ou classes de controle) que definem as rotas e tratam as requisições.
+    >    - Utiliza frameworks como Spring MVC ou Spring WebFlux para lidar com as requisições e respostas HTTP.
+    >
+    > 2. Camada de Negócios (Service):
+    >    - Responsável por implementar a lógica de negócios da aplicação.
+    >    - Contém as classes de serviço que encapsulam a lógica de processamento e interagem com a camada de persistência.
+    >    - Pode realizar validações, cálculos e operações de negócios antes de enviar os dados para a camada de persistência.
+    >    - Dependendo da complexidade da aplicação, pode ser dividida em subcamadas, como serviços de domínio e serviços de aplicação.
+    >
+    > 3. Camada de Persistência (Repository):
+    >    - Responsável por interagir com a camada de armazenamento de dados (banco de dados, API externa, arquivo, etc.).
+    >    - Contém as interfaces ou classes de repositório que definem as operações de leitura e gravação nos dados.
+    >    - Utiliza frameworks como Spring Data JPA ou Hibernate para simplificar o acesso e manipulação dos dados.
+    >
+    > 4. Camada de Transferência de Dados (DTO):
+    >    - Responsável por definir os objetos de transferência de dados entre as camadas.
+    >    - Contém classes de DTO (Data Transfer Object) que representam as estruturas de dados que são enviadas ou recebidas pela aplicação.
+    >    - Os DTOs são usados para evitar a exposição direta dos objetos de domínio nas interfaces de comunicação, fornecendo uma estrutura simplificada e independente.
+    >
+    > Essa é uma forma básica de organizar um projeto em camadas para um Web Service. É importante ressaltar que a estrutura pode variar de acordo com a complexidade e os requisitos do projeto. Além disso, é possível adicionar outras camadas, como camadas de segurança, caching, autenticação, entre outras, dependendo das necessidades da aplicação.
 
 - * ![Video](https://www.youtube.com/watch?v=b8uLFfzcVQ8&t=104s)
 
