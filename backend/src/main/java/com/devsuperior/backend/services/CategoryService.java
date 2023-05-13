@@ -11,7 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.devsuperior.backend.dto.CategoryDTO;
 import com.devsuperior.backend.entities.Category;
 import com.devsuperior.backend.repositories.CategoryRepository;
-import com.devsuperior.backend.services.exceptions.EntityNotFoundException;
+import com.devsuperior.backend.services.exceptions.ResourceNotFoundException;
+
+import jakarta.persistence.EntityNotFoundException;
 
 // Camada de serviço (Service)
 
@@ -39,15 +41,31 @@ public class CategoryService {
     @Transactional(readOnly = true) //Anotação para indicar que o método é transacional e que a operação é somente leitura
     public CategoryDTO findById(Long id) {
         Optional <Category> obj = repository.findById(id);
-        Category entity = obj.orElseThrow(() -> new EntityNotFoundException("Entity not found"));
+        Category entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
         return new CategoryDTO(entity);
     }
 
+    @Transactional //Anotação para indicar que o método é transacional
     public CategoryDTO insert(CategoryDTO dto) {
         Category entity = new Category();
         entity.setName(dto.getName());
         entity = repository.save(entity);
         return new CategoryDTO(entity);
     }
+
+@Transactional
+    public CategoryDTO update(Long id, CategoryDTO dto) {
+        try {
+            Category entity = repository.getReferenceById(id);
+            entity.setName(dto.getName());
+            entity = repository.save(entity);
+            return new CategoryDTO(entity);
+        } catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException("Id not found " + id);
+        }
+        
+    }
+
+   
     
 }
