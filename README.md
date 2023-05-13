@@ -1,6 +1,9 @@
 # DsCatalog
 ## Bootcamp Spring 3.0 - Escola Dev Superior
-> O DsCatalog é um sistema de catálogo de produtos que oferece uma experiência fácil e intuitiva tanto para compradores quanto para vendedores. Como comprador, você poderá explorar uma ampla variedade de produtos de forma simples e acessível. Além disso, caso seja um vendedor, você terá a possibilidade de cadastrar seus próprios produtos.
+> O **DsCatalog** é um sistema de catálogo de produtos ensinado no bootcamp Sprig 3.0 da escola **Dev Superior** abordando conceitos como  backend, camadas de uma Web Service e desenvolvimento com o ecosistema Spring. Confira toda documentação do meu aprendizado no link a seguir
+> [Welcome to the dscatalog wiki!](https://github.com/JuniorDaliessi/dscatalog/wiki)
+
+> O **DsCatalog** oferece uma experiência fácil e intuitiva tanto para compradores quanto para vendedores. Como comprador, você poderá explorar uma ampla variedade de produtos de forma simples e acessível. Além disso, caso seja um vendedor, você terá a possibilidade de cadastrar seus próprios produtos.
 
 > Os produtos no DsCatalog estão organizados por categorias, permitindo uma navegação mais eficiente. Cada produto apresenta a opção "saiba mais", onde você poderá encontrar uma descrição detalhada com informações importantes sobre o item.
 
