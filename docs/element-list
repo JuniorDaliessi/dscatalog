@@ -1,0 +1,8 @@
+com.devsuperior.backend
+com.devsuperior.backend.dto
+com.devsuperior.backend.entities
+com.devsuperior.backend.repositories
+com.devsuperior.backend.resources
+com.devsuperior.backend.resources.exceptions
+com.devsuperior.backend.services
+com.devsuperior.backend.services.exceptions
