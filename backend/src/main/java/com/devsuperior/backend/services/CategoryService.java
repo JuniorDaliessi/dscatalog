@@ -15,29 +15,36 @@ import com.devsuperior.backend.services.exceptions.ResourceNotFoundException;
 
 import jakarta.persistence.EntityNotFoundException;
 
-// Camada de serviço (Service)
-
+/**
+ * Classe que implementa a camada de serviço para a entidade Category.
+ * Utiliza a biblioteca Spring Framework para injeção de dependências e gerenciamento de transações.
+ */
 @Service //Anotação para indicar que a classe é um componente do Spring que vai ser injetado automaticamente
 public class CategoryService {
 
     @Autowired //Anotação para indicar que a dependência vai ser injetada automaticamente pelo Spring
     private CategoryRepository repository;
 
+    /**
+     * Retorna uma lista de todas as categorias.
+     *
+     * @return uma lista de todas as categorias.
+     */
     @Transactional(readOnly = true) //Anotação para indicar que o método é transacional e que a operação é somente leitura
     public List<CategoryDTO> findAll() {
         List<Category> list = repository.findAll();
         
         //Expressão lambda para converter uma lista de Category para uma lista de CategoryDTO
         return list.stream().map(x -> new CategoryDTO(x)).collect(Collectors.toList());
-
-//Código comentado para substituir por uma expressão lambda
-       /*  List<CategoryDTO> listDto = new ArrayList<>();
-        for (Category cat : list) {
-            listDto.add(new CategoryDTO(cat));
-        }*/ 
-        //return listDto;
     }
 
+    /**
+     * Retorna uma categoria pelo seu id.
+     *
+     * @param id o id da categoria a ser retornada.
+     * @return a categoria com o id especificado.
+     * @throws ResourceNotFoundException se a categoria não for encontrada.
+     */
     @Transactional(readOnly = true) //Anotação para indicar que o método é transacional e que a operação é somente leitura
     public CategoryDTO findById(Long id) {
         Optional <Category> obj = repository.findById(id);
@@ -45,6 +52,12 @@ public class CategoryService {
         return new CategoryDTO(entity);
     }
 
+    /**
+     * Insere uma nova categoria.
+     *
+     * @param dto o objeto DTO contendo os dados da nova categoria.
+     * @return a categoria inserida.
+     */
     @Transactional //Anotação para indicar que o método é transacional
     public CategoryDTO insert(CategoryDTO dto) {
         Category entity = new Category();
@@ -53,7 +66,15 @@ public class CategoryService {
         return new CategoryDTO(entity);
     }
 
-@Transactional
+    /**
+     * Atualiza uma categoria existente.
+     *
+     * @param id o id da categoria a ser atualizada.
+     * @param dto o objeto DTO contendo os novos dados da categoria.
+     * @return a categoria atualizada.
+     * @throws ResourceNotFoundException se a categoria não for encontrada.
+     */
+    @Transactional
     public CategoryDTO update(Long id, CategoryDTO dto) {
         try {
             Category entity = repository.getReferenceById(id);
@@ -65,7 +86,5 @@ public class CategoryService {
         }
         
     }
-
-   
     
 }

@@ -20,21 +20,37 @@ import com.devsuperior.backend.services.CategoryService;
 //Controlodor REST
 // O resource é o conceito e o controller REST é a implementação
 
-@RestController //Anotação para indicar que a classe é um recurso web
-@RequestMapping (value = "/categories") //Anotação para indicar o caminho do recurso
+
+/**
+ * Classe que implementa as rotas REST para manipulação de dados referentes às categorias de um aplicativo.
+ * Utiliza a biblioteca Spring Framework para gerenciamento de requisições HTTP.
+ */
+@RestController 
+@RequestMapping (value = "/categories") 
 public class CategoryResources {
 
     //Metodos
     @Autowired
     private CategoryService service;
 
-    @GetMapping //Anotação para indicar que o método responde a requisição do tipo GET do HTTP
+    /**
+     * Retorna uma lista de todas as categorias cadastradas no sistema.
+     *
+     * @return ResponseEntity com a lista de objetos CategoryDTO no corpo da resposta.
+     */
+    @GetMapping
     public ResponseEntity<List<CategoryDTO>> findAll() {
         List<CategoryDTO> list = service.findAll();
         return ResponseEntity.ok().body(list);
     }
 
-    @GetMapping(value = "/{id}") //Anotação para indicar que o método responde a requisição do tipo GET do HTTP
+    /**
+     * Retorna a categoria correspondente ao id informado.
+     *
+     * @param id o id da categoria a ser buscada.
+     * @return ResponseEntity com o objeto CategoryDTO correspondente no corpo da resposta.
+     */
+    @GetMapping(value = "/{id}")
     public ResponseEntity<CategoryDTO> findById(@PathVariable Long id) {
 
         //Poderiamos usar um try catch para tratar a exceção, mas vamos usar o ControllerAdvice (ExceptionHandler)
@@ -48,7 +64,13 @@ public class CategoryResources {
         return ResponseEntity.ok().body(dto);
     }
 
-    @PostMapping //Anotação para indicar que o método responde a requisição do tipo POST do HTTP
+    /**
+     * Insere uma nova categoria no sistema.
+     *
+     * @param dto o objeto CategoryDTO contendo os dados da categoria a ser inserida.
+     * @return ResponseEntity com o objeto CategoryDTO inserido no corpo da resposta e um header Location com a URL para acessar o objeto inserido.
+     */
+    @PostMapping
     public ResponseEntity<CategoryDTO> insert(@RequestBody CategoryDTO dto) {
         dto = service.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
@@ -56,6 +78,13 @@ public class CategoryResources {
         return ResponseEntity.created(uri).body(dto);
     }
 
+    /**
+     * Atualiza a categoria correspondente ao id informado com os dados contidos no CategoryDTO informado.
+     *
+     * @param id o id da categoria a ser atualizada.
+     * @param dto o objeto CategoryDTO contendo os novos dados da categoria.
+     * @return ResponseEntity com o objeto CategoryDTO atualizado no corpo da resposta.
+     */
     @PutMapping(value = "/{id}") //Anotação para indicar que o método responde a requisição do tipo PUT do HTTP
     public ResponseEntity<CategoryDTO> update(@PathVariable Long id, @RequestBody CategoryDTO dto) {
         dto = service.update(id, dto);

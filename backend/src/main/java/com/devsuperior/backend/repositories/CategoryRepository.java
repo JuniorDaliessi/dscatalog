@@ -5,9 +5,11 @@ import org.springframework.stereotype.Repository;
 
 import com.devsuperior.backend.entities.Category;
 
-// Camada de aceso a dados (Repository)
-
-@Repository //Anotação para indicar que a classe é um componente do Spring que vai ser injetado automaticamente
+/**
+ * Interface que define as operações de acesso a dados para a entidade Category.
+ * Utiliza a biblioteca Spring Data JPA para implementação automática das operações.
+ */
+@Repository //Anotação para dizer que a interface é um repositório
 public interface CategoryRepository extends JpaRepository<Category, Long> {
-    
+
 }
