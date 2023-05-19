@@ -5,12 +5,15 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.devsuperior.backend.dto.CategoryDTO;
 import com.devsuperior.backend.entities.Category;
 import com.devsuperior.backend.repositories.CategoryRepository;
+import com.devsuperior.backend.services.exceptions.DatabaseExeption;
 import com.devsuperior.backend.services.exceptions.ResourceNotFoundException;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -85,6 +88,24 @@ public class CategoryService {
             throw new ResourceNotFoundException("Id not found " + id);
         }
         
+    }
+    
+    /**
+     * Método responsável por deletar uma categoria do banco de dados.
+     *
+     * @param id Identificador da categoria a ser deletada.
+     * @throws ResourceNotFoundException Exceção lançada caso a categoria não seja encontrada no banco de dados.
+     * @throws DatabaseExeption Exceção lançada caso ocorra um erro no banco de dados.
+     */
+    //Não usar o Transactional para o delete, pois o delete é uma operação que não precisa de transação
+     public void delete(Long id) throws ResourceNotFoundException, DatabaseExeption {
+        try {
+            repository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new ResourceNotFoundException("Id not found " + id);
+        } catch (DataIntegrityViolationException e) {
+            throw new DatabaseExeption("Integrity violation");
+        }
     }
     
 }
