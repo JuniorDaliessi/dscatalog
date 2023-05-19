@@ -1,11 +1,15 @@
 package com.devsuperior.backend.entities;
 
 import java.io.Serializable;
+import java.time.Instant;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
 /**
@@ -28,6 +32,18 @@ public class Category implements Serializable {
      * Nome da categoria.
      */
     private String name;
+
+    /**
+     * Data de criação da categoria.
+     */
+    @Column (columnDefinition = "TIMESTAMP WITHOUT TIME ZONE") //Anotação para dizer que o atributo é uma coluna do banco de dados
+    private Instant createdAt;
+
+    /**
+     * Data de atualização da categoria.
+     */
+    @Column (columnDefinition = "TIMESTAMP WITHOUT TIME ZONE") //Anotação para dizer que o atributo é uma coluna do banco de dados
+    private Instant updatedAt;
 
     //Construtores
     /**
@@ -83,4 +99,44 @@ public class Category implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+
+    /**
+     * Retorna a data de criação da categoria.
+     *
+     * @return a data de criação da categoria.
+     */
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    /**
+     * Define a data de criação da categoria.
+     *
+     * @param createdAt a data de criação da categoria.
+     */
+    @PrePersist //Anotação para dizer que o método deve ser executado antes de persistir os dados no banco de dados
+    public void prePersist() {
+        createdAt = Instant.now();
+    }
+
+    /**
+     * Retorna a data de atualização da categoria.
+     *
+     * @return a data de atualização da categoria.
+     */
+    public Instant getUpdatedAt() {
+        return updatedAt;
+    }
+
+    /**
+     * Define a data de atualização da categoria.
+     *
+     * @param updatedAt a data de atualização da categoria.
+     */
+    @PreUpdate //Anotação para dizer que o método deve ser executado antes de atualizar os dados no banco de dados
+    public void preUpdate() {
+        updatedAt = Instant.now();
+    }
+
+    
 }
