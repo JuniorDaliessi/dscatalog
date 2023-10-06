@@ -13,6 +13,6 @@ public class ResourceNotFoundException extends RuntimeException{
      * @param msg a mensagem de erro a ser exibida.
      */
     public ResourceNotFoundException(String msg){
-        super(msg); // repassa a mensagem para a superclasse
+        super(msg); // repassa a mensagem do construtor para a superclasse (RuntimeException)
     }
 }

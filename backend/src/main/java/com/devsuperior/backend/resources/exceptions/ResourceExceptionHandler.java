@@ -33,8 +33,8 @@ public class ResourceExceptionHandler {
         err.setTimestamp(Instant.now()); //Pega o instante atual do sistema
         err.setStatus(status.value()); //Código HTTP 404
         err.setError("Recurso não encontrado"); //Mensagem de erro
-        err.setMessage(e.getMessage()); //Mensagem da exceção
-        err.setPath(request.getRequestURI()); //Pega o caminho da requisição
+        err.setMessage(e.getMessage()); //Mensagem da exceção vinda da classe ResourceNotFoundException no pacote services.exceptions
+        err.setPath(request.getRequestURI()); //Pega o caminho da requisição no objeto request
         return ResponseEntity.status(status).body(err); //Retorna a resposta com o código HTTP 404 e o corpo com o objeto err
     }
 
